@@ -160,17 +160,35 @@ public class MetaCommand extends NameDescription {
 
     /**
      * returns an argument based on name or null if it doesn't exist
+     * <p>
+     * The argument is only looked up in the current meta command, not in its parent.
      * 
      * @param argumentName
      * @return
      */
     public Argument getArgument(String argumentName) {
+        return getArgument(argumentName, false);
+    }
+
+    /**
+     * Looks up an argument by name possibly recursing to the parent.
+     * 
+     * @param argumentName
+     * @param recursive
+     *            - if true, search also in the parent meta command if any
+     * @return
+     */
+    public Argument getArgument(String argumentName, boolean recursive) {
         for (Argument a : argumentList) {
             if (a.getName().equals(argumentName)) {
                 return a;
             }
         }
-        return null;
+        if (recursive && baseMetaCommand != null) {
+            return baseMetaCommand.getArgument(argumentName, recursive);
+        } else {
+            return null;
+        }
     }
 
     /**
