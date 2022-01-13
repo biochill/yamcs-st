@@ -97,7 +97,7 @@ public class CommandVerificationHandler implements CommandHistoryConsumer {
                 verifier = new MatchCriteriaVerifier(this, cv);
                 break;
             case PARAMETER_VALUE_CHANGE:
-                verifier = new ValueChangeVerifier(this, cv, log);
+                verifier = new ValueChangeVerifier(this, cv);
                 break;
             default:
                 throw new IllegalStateException("Command verifier of type " + cv.getType() + " not implemented");
